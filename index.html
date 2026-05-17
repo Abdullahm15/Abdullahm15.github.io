@@ -5,341 +5,359 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Abdullah Mohamed · Data Analyst</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Ambient orbs -->
+<canvas id="matrix-canvas"></canvas>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 <div class="orb orb-3"></div>
 
-<!-- Navigation -->
-<nav>
-  <div class="nav-brand"><span>~/</span>abdullah-mohamed</div>
+<!-- ── NAV ── -->
+<nav id="navbar">
+  <div class="nav-brand"><span>~/</span>Abdullah Mohamed</div>
   <ul class="nav-links">
+    <li><a href="#hero">home</a></li>
     <li><a href="#projects">projects</a></li>
     <li><a href="#skills">skills</a></li>
     <li><a href="#about">about</a></li>
     <li><a href="#contact">contact</a></li>
+    <li class="cv-nav-item">
+      <button class="cv-btn" id="cvBtn">
+        <span class="cv-btn-icon">📄</span> CV <span class="cv-chevron" id="cvChevron">▾</span>
+      </button>
+    </li>
   </ul>
-  <div class="nav-status">
-    <div class="pulse-dot"></div>
-    open to opportunities
-  </div>
+  <div class="nav-status"><div class="pulse-dot"></div>open to opportunities</div>
 </nav>
+
+<!-- ── CV OVERLAY ── -->
+<div class="cv-overlay" id="cvOverlay">
+  <div class="cv-panel" id="cvPanel">
+    <div class="cv-panel-bar">
+      <div class="cv-dd-dots"><span></span><span></span><span></span></div>
+      <span class="cv-panel-title">Abdullah_Mohamed_CV.pdf</span>
+      <button class="cv-panel-close" id="cvPanelClose">✕</button>
+    </div>
+    <div class="cv-panel-body">
+      <div class="cv-block">
+        <div class="cv-big-name">ABDULLAH MUHAMMED ABDULLAH</div>
+        <div class="cv-big-meta">Cairo, Egypt &nbsp;·&nbsp; +20 112 281 1623 &nbsp;·&nbsp; abdallahmuhammedd71@gmail.com</div>
+        <div class="cv-big-meta"><a href="https://www.linkedin.com/in/abdullah-mohammedd/" target="_blank" style="color:var(--blue)">linkedin.com/in/abdullah-mohammedd</a></div>
+      </div>
+      <div class="cv-divider"></div>
+      <div class="cv-block">
+        <div class="cv-sec-head">// SUMMARY</div>
+        <p class="cv-body-text">Data-oriented Information Systems graduate with hands-on experience in data analysis, KPI reporting, performance tracking, and business intelligence reporting. Currently working as a Planning and Performance Specialist at MNT-Halan, where I collect, analyze, and visualize operational data to support strategic decision-making. Proficient in Microsoft Excel, Power BI, and SQL. Seeking a data analyst, business intelligence analyst, or performance analyst role.</p>
+      </div>
+      <div class="cv-divider"></div>
+      <div class="cv-block">
+        <div class="cv-sec-head">// EXPERIENCE</div>
+        <div class="cv-job-head">Planning and Performance Specialist</div>
+        <div class="cv-job-meta">MNT-Halan &nbsp;·&nbsp; Cairo, Egypt &nbsp;·&nbsp; August 2024 – Present</div>
+        <ul class="cv-list">
+          <li>Collect, clean, and analyze operational datasets to measure performance against strategic KPIs and identify trends.</li>
+          <li>Design and maintain performance dashboards and reports for department heads, consolidating data from multiple sources.</li>
+          <li>Assist in developing quarterly strategic plans including resource allocation models and goal-setting frameworks.</li>
+          <li>Conduct benchmarking research comparing company metrics against industry standards.</li>
+          <li>Support cross-functional project coordination by tracking milestones and flagging risks.</li>
+          <li>Standardize data collection templates and internal reporting workflows, reducing manual effort.</li>
+        </ul>
+      </div>
+      <div class="cv-divider"></div>
+      <div class="cv-block">
+        <div class="cv-sec-head">// EDUCATION</div>
+        <div class="cv-job-head">Bachelor's Degree in Business Information Systems</div>
+        <div class="cv-job-meta">Misr University for Science and Technology (MUST) &nbsp;·&nbsp; Graduated June 2024 &nbsp;·&nbsp; GPA: 3.17 / 4.00 &nbsp;·&nbsp; Grade: B+</div>
+        <p class="cv-body-text" style="margin-top:8px;">Relevant coursework: Database Systems, Business Analytics, Management Information Systems, Operations Research, Statistical Analysis.</p>
+      </div>
+      <div class="cv-divider"></div>
+      <div class="cv-block">
+        <div class="cv-sec-head">// TECHNICAL SKILLS</div>
+        <div class="cv-skills-grid">
+          <div class="cv-skill-group">
+            <div class="cv-skill-label">BI & Visualization</div>
+            <div class="cv-tags-row"><span class="cv-tag">Power BI</span><span class="cv-tag">Tableau</span><span class="cv-tag">DAX</span><span class="cv-tag">Dashboards</span></div>
+          </div>
+          <div class="cv-skill-group">
+            <div class="cv-skill-label">Data Wrangling</div>
+            <div class="cv-tags-row"><span class="cv-tag">Excel</span><span class="cv-tag">Power Query</span><span class="cv-tag">PivotTables</span><span class="cv-tag">Dynamic Arrays</span></div>
+          </div>
+          <div class="cv-skill-group">
+            <div class="cv-skill-label">Databases</div>
+            <div class="cv-tags-row"><span class="cv-tag">SQL</span><span class="cv-tag">Joins</span><span class="cv-tag">Subqueries</span><span class="cv-tag">Aggregation</span></div>
+          </div>
+          <div class="cv-skill-group">
+            <div class="cv-skill-label">Programming</div>
+            <div class="cv-tags-row"><span class="cv-tag">Python</span><span class="cv-tag">Pandas</span><span class="cv-tag">NumPy</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cv-divider"></div>
+      <div class="cv-block">
+        <div class="cv-sec-head">// PROJECTS</div>
+        <div class="cv-proj-item">
+          <div class="cv-proj-name">Sales Performance Dashboard <span class="cv-proj-tool">· Power BI</span></div>
+          <ul class="cv-list">
+            <li>Built end-to-end BI dashboard with star-schema data model and dynamic cross-filtering.</li>
+            <li>KPI cards, slicers, bar &amp; line charts with automated refresh.</li>
+            <li>Identified 22% revenue concentration → executive reallocation brief.</li>
+          </ul>
+        </div>
+        <div class="cv-proj-item">
+          <div class="cv-proj-name">KPI Reporting Automation <span class="cv-proj-tool">· Excel</span></div>
+          <ul class="cv-list">
+            <li>Automated monthly KPI tracker with traffic-light status indicators.</li>
+            <li>~60% reduction in monthly reporting prep time.</li>
+          </ul>
+        </div>
+        <div class="cv-proj-item">
+          <div class="cv-proj-name">Customer Segmentation Analysis <span class="cv-proj-tool">· SQL + Power BI</span></div>
+          <ul class="cv-list">
+            <li>RFM segmentation on 500+ customers using percentile-based SQL logic.</li>
+            <li>Visualized in Power BI with treemap &amp; scatter chart.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cv-divider"></div>
+      <div class="cv-block">
+        <div class="cv-sec-head">// CERTIFICATIONS</div>
+        <ul class="cv-list">
+          <li>Google Data Analytics Professional Certificate (Coursera)</li>
+          <li>IBM Data Analyst Professional Certificate (Coursera)</li>
+          <li>Microsoft SQL Server (Coursera)</li>
+          <li>Deloitte Data Analytics Virtual Experience Program (Forage)</li>
+        </ul>
+      </div>
+      <div class="cv-divider"></div>
+      <div class="cv-block">
+        <div class="cv-sec-head">// LANGUAGES</div>
+        <div class="cv-tags-row"><span class="cv-tag">Arabic (Native)</span><span class="cv-tag">English (Professional)</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="cv-backdrop" id="cvBackdrop"></div>
+</div>
 
 <main>
 
-  <!-- ── Hero ── -->
+  <!-- HERO -->
   <section id="hero">
     <div class="hero-inner">
       <div class="hero-eyebrow">whoami</div>
-      <h1 class="hero-name">
-        Abdullah
-        <span class="accent">Mohamed</span>
-      </h1>
-      <div class="hero-role">
-        Performance Specialist ·
-        <span class="at">MNT-Halan</span> · Cairo, EG
-      </div>
-      <p class="hero-bio">
-        Data-oriented Information Systems graduate turning raw operational data into strategic decisions.
-        Specializing in KPI reporting, BI dashboards, and performance tracking — with a focus on
-        clarity, speed, and impact.
-      </p>
+      <h1 class="hero-name">Abdullah<span class="accent">Mohamed</span></h1>
+      <div class="hero-role">Planning &amp; Performance Specialist · <span class="at">MNT-Halan</span> · Cairo, EG</div>
+      <div class="hero-typewriter"><span class="tw-prefix">I turn data into </span><span id="typewriter"></span><span class="tw-cursor">|</span></div>
+      <p class="hero-bio">Data-oriented Information Systems graduate turning raw operational data into strategic decisions. Specializing in KPI reporting, BI dashboards, and performance tracking — with a focus on clarity, speed, and impact.</p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">↓ view my work</a>
-        <a href="mailto:abdallahmuhammedd7a@gmail.com" class="btn btn-outline">get in touch</a>
+        <a href="mailto:abdallahmuhammedd71@gmail.com" class="btn btn-outline">get in touch</a>
         <a href="https://github.com/Abdullahm15" target="_blank" class="btn btn-outline">github ↗</a>
       </div>
+      <div class="hero-stats">
+        <div class="hstat"><span class="hstat-num">3+</span><span class="hstat-label">Projects</span></div>
+        <div class="hstat-divider"></div>
+        <div class="hstat"><span class="hstat-num">60%</span><span class="hstat-label">Time Saved</span></div>
+        <div class="hstat-divider"></div>
+        <div class="hstat"><span class="hstat-num">500+</span><span class="hstat-label">Customers Analysed</span></div>
+        <div class="hstat-divider"></div>
+        <div class="hstat"><span class="hstat-num">4</span><span class="hstat-label">Certifications</span></div>
+      </div>
     </div>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      <div class="scroll-label">scroll</div>
-    </div>
+    <div class="hero-scroll"><div class="scroll-line"></div><div class="scroll-label">scroll</div></div>
   </section>
 
-  <!-- ── Projects ── -->
+  <!-- PROJECTS -->
   <section id="projects">
     <div class="container">
-      <div class="sec-header reveal">
-        <span class="sec-num">01.</span>
-        <h2 class="sec-title">Projects</h2>
-        <div class="sec-line"></div>
-      </div>
-
+      <div class="sec-header reveal"><span class="sec-num">01.</span><h2 class="sec-title">Projects</h2><div class="sec-line"></div></div>
       <div class="projects-grid">
-
         <div class="proj-card reveal reveal-delay-1">
+          <div class="proj-card-glow"></div>
           <div class="proj-num">PROJECT 01 · POWER BI</div>
           <div class="proj-name">Sales Performance Dashboard</div>
           <div class="proj-tools">Power BI Desktop · DAX · Excel (Power Query)</div>
           <ul class="proj-bullets">
-            <li>Built end-to-end BI dashboard analyzing retail sales — revenue trends, top products, and regional gaps</li>
-            <li>Modeled a star-schema structure with fact &amp; dimension tables enabling dynamic cross-filtering</li>
-            <li>KPI cards, slicers, bar &amp; line charts with automated refresh — eliminating manual reporting</li>
-            <li class="proj-highlight">Identified 22% revenue concentration in one segment → exec reallocation brief</li>
+            <li>Built end-to-end BI dashboard — revenue trends, top products, regional gaps</li>
+            <li>Star-schema data model with dynamic cross-filtering</li>
+            <li>KPI cards, slicers, bar &amp; line charts with automated refresh</li>
+            <li class="proj-highlight">Identified 22% revenue concentration → exec reallocation brief</li>
           </ul>
-          <div class="proj-tags">
-            <span class="proj-tag">Power BI</span>
-            <span class="proj-tag">DAX</span>
-            <span class="proj-tag">Power Query</span>
-            <span class="proj-tag">Star Schema</span>
-          </div>
+          <div class="proj-tags"><span class="proj-tag">Power BI</span><span class="proj-tag">DAX</span><span class="proj-tag">Power Query</span><span class="proj-tag">Star Schema</span></div>
         </div>
-
         <div class="proj-card reveal reveal-delay-2">
+          <div class="proj-card-glow"></div>
           <div class="proj-num">PROJECT 02 · EXCEL</div>
           <div class="proj-name">KPI Reporting Automation</div>
-          <div class="proj-tools">Excel · Power Query · Dynamic Arrays · Structured Tables</div>
+          <div class="proj-tools">Excel · Power Query · Dynamic Arrays</div>
           <ul class="proj-bullets">
-            <li>Automated monthly KPI tracker consolidating team-level metrics from a structured data source</li>
-            <li>Designed traffic-light status indicators — below-target metrics visible in under 30 seconds</li>
-            <li class="proj-highlight">~60% reduction in monthly reporting prep time via structured table automation</li>
+            <li>Automated monthly KPI tracker consolidating team-level metrics</li>
+            <li>Traffic-light indicators — below-target metrics in &lt;30 sec</li>
+            <li class="proj-highlight">~60% reduction in monthly reporting prep time</li>
           </ul>
-          <div class="proj-tags">
-            <span class="proj-tag">Excel</span>
-            <span class="proj-tag">Power Query</span>
-            <span class="proj-tag">Dynamic Arrays</span>
-            <span class="proj-tag">Named Ranges</span>
-          </div>
+          <div class="proj-tags"><span class="proj-tag">Excel</span><span class="proj-tag">Power Query</span><span class="proj-tag">Dynamic Arrays</span></div>
         </div>
-
         <div class="proj-card reveal reveal-delay-3">
+          <div class="proj-card-glow"></div>
           <div class="proj-num">PROJECT 03 · SQL + POWER BI</div>
           <div class="proj-name">Customer Segmentation Analysis</div>
           <div class="proj-tools">SQL · Excel · Power BI · RFM Analysis</div>
           <ul class="proj-bullets">
-            <li>RFM (Recency, Frequency, Monetary) segmentation on a public e-commerce dataset</li>
-            <li class="proj-highlight">SQL queries computing RFM scores for 500+ customers using percentile-based logic</li>
-            <li>Treemap &amp; scatter chart in Power BI visualizing segment distribution across four tiers</li>
-            <li>Mock marketing brief produced for two priority customer segments</li>
+            <li>RFM segmentation on a public e-commerce dataset</li>
+            <li class="proj-highlight">RFM scores for 500+ customers using percentile-based SQL logic</li>
+            <li>Treemap &amp; scatter chart across four customer tiers</li>
+            <li>Mock marketing brief for two priority segments</li>
           </ul>
-          <div class="proj-tags">
-            <span class="proj-tag">SQL</span>
-            <span class="proj-tag">Power BI</span>
-            <span class="proj-tag">RFM</span>
-            <span class="proj-tag">Segmentation</span>
-          </div>
+          <div class="proj-tags"><span class="proj-tag">SQL</span><span class="proj-tag">Power BI</span><span class="proj-tag">RFM</span><span class="proj-tag">Segmentation</span></div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- ── Skills ── -->
+  <!-- SKILLS -->
   <section id="skills">
     <div class="container">
-      <div class="sec-header reveal">
-        <span class="sec-num">02.</span>
-        <h2 class="sec-title">Skills</h2>
-        <div class="sec-line"></div>
-      </div>
-
+      <div class="sec-header reveal"><span class="sec-num">02.</span><h2 class="sec-title">Skills</h2><div class="sec-line"></div></div>
       <div class="skills-layout">
         <div class="skills-left reveal">
-          <p>
-            Proficient across the full data workflow — from querying and cleaning raw data in SQL and Power Query,
-            to modeling and transforming it in Python and DAX, to surfacing insights through production-grade
-            dashboards in Power BI and Tableau.
-          </p>
-          <p>
-            Currently deepening expertise in advanced DAX patterns, data modeling best practices, and Python
-            for analytics automation.
-          </p>
+          <p>Proficient across the full data workflow — from querying and cleaning raw data in SQL and Power Query, to modeling in Python and DAX, to surfacing insights through production-grade dashboards in Power BI and Tableau.</p>
+          <p>Currently deepening expertise in advanced DAX patterns, data modeling best practices, and Python for analytics automation.</p>
           <div class="skills-highlight">
-            <div class="skill-stat">
-              <span class="skill-stat-num">3</span>
-              <div class="skill-stat-label">PROJECTS SHIPPED</div>
-            </div>
-            <div class="skill-stat">
-              <span class="skill-stat-num">60%</span>
-              <div class="skill-stat-label">REPORTING TIME SAVED</div>
-            </div>
-            <div class="skill-stat">
-              <span class="skill-stat-num">500+</span>
-              <div class="skill-stat-label">CUSTOMERS ANALYSED</div>
-            </div>
-            <div class="skill-stat">
-              <span class="skill-stat-num">22%</span>
-              <div class="skill-stat-label">REVENUE INSIGHT FOUND</div>
-            </div>
+            <div class="skill-stat"><span class="skill-stat-num" data-target="3">0</span><div class="skill-stat-label">PROJECTS SHIPPED</div></div>
+            <div class="skill-stat"><span class="skill-stat-num" data-target="60" data-suffix="%">0</span><div class="skill-stat-label">REPORTING TIME SAVED</div></div>
+            <div class="skill-stat"><span class="skill-stat-num" data-target="500" data-suffix="+">0</span><div class="skill-stat-label">CUSTOMERS ANALYSED</div></div>
+            <div class="skill-stat"><span class="skill-stat-num" data-target="4">0</span><div class="skill-stat-label">CERTIFICATIONS</div></div>
           </div>
         </div>
-
         <div class="skills-right reveal reveal-delay-1">
-          <div class="skill-row">
-            <div class="skill-icon icon-blue">📊</div>
-            <div class="skill-info">
-              <div class="skill-name">Power BI</div>
-              <div class="skill-cat-label">BI &amp; Visualization</div>
-            </div>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%;"></div></div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-icon icon-green">📗</div>
-            <div class="skill-info">
-              <div class="skill-name">Excel &amp; Power Query</div>
-              <div class="skill-cat-label">Data Wrangling</div>
-            </div>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:92%;"></div></div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-icon icon-blue">🗄️</div>
-            <div class="skill-info">
-              <div class="skill-name">SQL</div>
-              <div class="skill-cat-label">Databases &amp; Querying</div>
-            </div>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%;"></div></div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-icon icon-purple">⚡</div>
-            <div class="skill-info">
-              <div class="skill-name">DAX</div>
-              <div class="skill-cat-label">Data Modeling</div>
-            </div>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:78%;"></div></div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-icon icon-amber">🐍</div>
-            <div class="skill-info">
-              <div class="skill-name">Python</div>
-              <div class="skill-cat-label">Analytics &amp; Automation</div>
-            </div>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:65%;"></div></div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-icon icon-blue">📈</div>
-            <div class="skill-info">
-              <div class="skill-name">Tableau</div>
-              <div class="skill-cat-label">BI &amp; Visualization</div>
-            </div>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%;"></div></div>
-          </div>
+          <div class="skill-row"><div class="skill-icon icon-blue">📊</div><div class="skill-info"><div class="skill-name">Power BI</div><div class="skill-cat-label">BI &amp; Visualization</div></div><div class="skill-bar-wrap"><div class="skill-bar" data-width="90"></div></div><span class="skill-pct">90%</span></div>
+          <div class="skill-row"><div class="skill-icon icon-green">📗</div><div class="skill-info"><div class="skill-name">Excel &amp; Power Query</div><div class="skill-cat-label">Data Wrangling</div></div><div class="skill-bar-wrap"><div class="skill-bar" data-width="92"></div></div><span class="skill-pct">92%</span></div>
+          <div class="skill-row"><div class="skill-icon icon-blue">🗄️</div><div class="skill-info"><div class="skill-name">SQL</div><div class="skill-cat-label">Databases &amp; Querying</div></div><div class="skill-bar-wrap"><div class="skill-bar" data-width="80"></div></div><span class="skill-pct">80%</span></div>
+          <div class="skill-row"><div class="skill-icon icon-purple">⚡</div><div class="skill-info"><div class="skill-name">DAX</div><div class="skill-cat-label">Data Modeling</div></div><div class="skill-bar-wrap"><div class="skill-bar" data-width="78"></div></div><span class="skill-pct">78%</span></div>
+          <div class="skill-row"><div class="skill-icon icon-amber">🐍</div><div class="skill-info"><div class="skill-name">Python</div><div class="skill-cat-label">Analytics &amp; Automation</div></div><div class="skill-bar-wrap"><div class="skill-bar" data-width="65"></div></div><span class="skill-pct">65%</span></div>
+          <div class="skill-row"><div class="skill-icon icon-blue">📈</div><div class="skill-info"><div class="skill-name">Tableau</div><div class="skill-cat-label">BI &amp; Visualization</div></div><div class="skill-bar-wrap"><div class="skill-bar" data-width="70"></div></div><span class="skill-pct">70%</span></div>
+        </div>
+      </div>
+      <div class="certs-section reveal">
+        <div class="certs-label">// certifications</div>
+        <div class="certs-grid">
+          <div class="cert-card"><div class="cert-icon">🎓</div><div class="cert-name">Google Data Analytics</div><div class="cert-issuer">Coursera · Professional Certificate</div></div>
+          <div class="cert-card"><div class="cert-icon">🏆</div><div class="cert-name">IBM Data Analyst</div><div class="cert-issuer">Coursera · Professional Certificate</div></div>
+          <div class="cert-card"><div class="cert-icon">🗄️</div><div class="cert-name">Microsoft SQL Server</div><div class="cert-issuer">Coursera · Certificate</div></div>
+          <div class="cert-card"><div class="cert-icon">💼</div><div class="cert-name">Deloitte Data Analytics</div><div class="cert-issuer">Forage · Virtual Experience</div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── About ── -->
+  <!-- ABOUT -->
   <section id="about">
     <div class="container">
-      <div class="sec-header reveal">
-        <span class="sec-num">03.</span>
-        <h2 class="sec-title">About</h2>
-        <div class="sec-line"></div>
-      </div>
-
+      <div class="sec-header reveal"><span class="sec-num">03.</span><h2 class="sec-title">About</h2><div class="sec-line"></div></div>
       <div class="about-grid">
         <div class="about-visual reveal">
           <div class="terminal">
             <div class="terminal-bar">
-              <div class="t-dot t-dot-r"></div>
-              <div class="t-dot t-dot-y"></div>
-              <div class="t-dot t-dot-g"></div>
+              <div class="t-dot t-dot-r"></div><div class="t-dot t-dot-y"></div><div class="t-dot t-dot-g"></div>
               <span class="terminal-title">profile.json</span>
             </div>
             <div class="terminal-body">
               <div class="t-line"><span class="t-out">{</span></div>
               <div class="t-line">&nbsp;&nbsp;<span class="t-key">"name"</span><span class="t-out">:</span> <span class="t-str">"Abdullah Mohamed"</span><span class="t-out">,</span></div>
-              <div class="t-line">&nbsp;&nbsp;<span class="t-key">"role"</span><span class="t-out">:</span> <span class="t-str">"Performance Specialist"</span><span class="t-out">,</span></div>
-              <div class="t-line">&nbsp;&nbsp;<span class="t-key">"company"</span><span class="t-out">:</span> <span class="t-str">"Paymob"</span><span class="t-out">,</span></div>
+              <div class="t-line">&nbsp;&nbsp;<span class="t-key">"role"</span><span class="t-out">:</span> <span class="t-str">"Planning &amp; Performance Specialist"</span><span class="t-out">,</span></div>
+              <div class="t-line">&nbsp;&nbsp;<span class="t-key">"company"</span><span class="t-out">:</span> <span class="t-str">"MNT-Halan"</span><span class="t-out">,</span></div>
               <div class="t-line">&nbsp;&nbsp;<span class="t-key">"location"</span><span class="t-out">:</span> <span class="t-str">"Cairo, EG"</span><span class="t-out">,</span></div>
-              <div class="t-line">&nbsp;&nbsp;<span class="t-key">"education"</span><span class="t-out">:</span> <span class="t-str">"Business Information Systems"</span><span class="t-out">,</span></div>
+              <div class="t-line">&nbsp;&nbsp;<span class="t-key">"education"</span><span class="t-out">:</span> <span class="t-str">"B.A. Business Information Systems · MUST"</span><span class="t-out">,</span></div>
+              <div class="t-line">&nbsp;&nbsp;<span class="t-key">"gpa"</span><span class="t-out">:</span> <span class="t-val">3.17</span><span class="t-out">,</span></div>
               <div class="t-blank"></div>
               <div class="t-line">&nbsp;&nbsp;<span class="t-key">"focus"</span><span class="t-out">: [</span></div>
-              <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Data Analysis"</span><span class="t-out">,</span></div>
-              <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Building BI Dashboards"</span><span class="t-out">,</span></div>
+              <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"KPI Reporting"</span><span class="t-out">,</span></div>
+              <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"BI Dashboards"</span><span class="t-out">,</span></div>
               <div class="t-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"Performance Tracking"</span></div>
               <div class="t-line">&nbsp;&nbsp;<span class="t-out">],</span></div>
               <div class="t-blank"></div>
               <div class="t-line">&nbsp;&nbsp;<span class="t-key">"open_to_work"</span><span class="t-out">:</span> <span class="t-val">true</span></div>
               <div class="t-line"><span class="t-out">}</span></div>
               <div class="t-blank"></div>
-              <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">_</span><div class="t-cursor"></div></div>
+              <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd">_</span><span class="t-cursor-blink"></span></div>
             </div>
           </div>
         </div>
-
         <div class="about-content reveal reveal-delay-1">
-          <p>
-            I'm an Information Systems graduate currently working as a Performance
-            Specialist at MNT-Halan, where I collect, analyze, and visualize operational data
-            to drive strategic decisions.
-          </p>
-          <p>
-            My approach: start with the business question, not the data. Every dashboard I build
-            is designed to reduce the time between "what's happening?" and "what do we do about it?"
-          </p>
-          <p>
-            Seeking a Data Analyst, BI Analyst, or Performance Analyst role where I can contribute
-            my analytical skills and grow within a data-driven team.
-          </p>
+          <p>I'm an Information Systems graduate currently working as a Planning &amp; Performance Specialist at MNT-Halan, where I collect, analyze, and visualize operational data to drive strategic decisions.</p>
+          <p>My approach: start with the business question, not the data. Every dashboard I build is designed to reduce the time between "what's happening?" and "what do we do about it?"</p>
+          <p>Seeking a Data Analyst, BI Analyst, or Performance Analyst role where I can contribute analytical skills and grow within a data-driven team.</p>
           <div class="about-facts">
-            <div class="fact-item">
-              <div class="fact-label">CURRENT ROLE</div>
-              <div class="fact-value">B2B Payments Analyst</div>
-            </div>
-            <div class="fact-item">
-              <div class="fact-label">COMPANY</div>
-              <div class="fact-value">Paymob</div>
-            </div>
-            <div class="fact-item">
-              <div class="fact-label">EXPERIENCE</div>
-              <div class="fact-value">2 Years</div>
-            </div>
-            <div class="fact-item">
-              <div class="fact-label">AVAILABILITY</div>
-              <div class="fact-value" style="color: var(--green);">Open to Work</div>
-            </div>
+            <div class="fact-item"><div class="fact-label">CURRENT ROLE</div><div class="fact-value">Planning Specialist</div></div>
+            <div class="fact-item"><div class="fact-label">COMPANY</div><div class="fact-value">MNT-Halan</div></div>
+            <div class="fact-item"><div class="fact-label">EDUCATION</div><div class="fact-value">B.Sc. Info Systems</div></div>
+            <div class="fact-item"><div class="fact-label">GPA</div><div class="fact-value">3.17/4.00 · B+</div></div>
+            <div class="fact-item"><div class="fact-label">LANGUAGES</div><div class="fact-value">Arabic · English</div></div>
+            <div class="fact-item"><div class="fact-label">AVAILABILITY</div><div class="fact-value" style="color:var(--green)">Open to Offers ✓</div></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Contact ── -->
+  <!-- CONTACT -->
   <section id="contact">
     <div class="container">
       <div class="contact-inner">
         <div class="reveal">
           <h2 class="contact-headline">Let's work<br><span class="grad">together.</span></h2>
-          <p class="contact-sub">
-            Looking for a data analyst, BI analyst, or performance analyst role.<br>
-            Open to full-time positions, freelance projects, and collaborations.
-          </p>
+          <p class="contact-sub">Looking for a data analyst, BI analyst, or performance analyst role.<br>Open to full-time positions, freelance projects, and collaborations.</p>
         </div>
         <div class="contact-cards reveal reveal-delay-1">
-          <a href="mailto:abdallahmuhammedd7a@gmail.com" class="contact-card">
-            <div class="cc-icon">✉</div>
-            <div class="cc-label">EMAIL</div>
-            <div class="cc-value" style="font-size:11px;">abdallahmuhammedd7a<br>@gmail.com</div>
-          </a>
-          <a href="https://www.linkedin.com/in/abdullah-mohammedd/" target="_blank" class="contact-card">
-            <div class="cc-icon">in</div>
-            <div class="cc-label">LINKEDIN</div>
-            <div class="cc-value">abdullah-mohammedd</div>
-          </a>
-          <a href="https://github.com/Abdullahm15" target="_blank" class="contact-card">
-            <div class="cc-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.912.832.091-.647.35-1.087.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.748-1.025 2.748-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
-            </div>
-            <div class="cc-label">GITHUB</div>
-            <div class="cc-value">Abdullahm15</div>
-          </a>
+          <a href="mailto:abdallahmuhammedd71@gmail.com" class="contact-card"><div class="cc-icon">✉</div><div class="cc-label">EMAIL</div><div class="cc-value" style="font-size:11px;">abdallahmuhammedd71@gmail.com</div></a>
+          <a href="https://www.linkedin.com/in/abdullah-mohammedd/" target="_blank" class="contact-card"><div class="cc-icon">in</div><div class="cc-label">LINKEDIN</div><div class="cc-value">abdullah-mohammedd</div></a>
+          <a href="https://github.com/Abdullahm15" target="_blank" class="contact-card"><div class="cc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.167 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.607.069-.607 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.912.832.091-.647.35-1.087.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.748-1.025 2.748-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg></div><div class="cc-label">GITHUB</div><div class="cc-value">Abdullahm15</div></a>
         </div>
       </div>
     </div>
   </section>
-
 </main>
 
 <footer>
   <div class="footer-l">© 2025 Abdullah Mohamed · All rights reserved</div>
   <div class="footer-r">built with <span>♥</span> and data · Cairo, EG</div>
 </footer>
+
+<!-- CHATBOT -->
+<div class="chatbot-fab" id="chatFab">
+  <div class="fab-glow"></div>
+  <span class="fab-icon">🤖</span>
+  <div class="fab-badge" id="fabBadge">1</div>
+</div>
+<div class="chatbot-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">🤖</div>
+      <div>
+        <div class="chat-title">Abdullah's AI Assistant</div>
+        <div class="chat-subtitle"><span class="chat-online-dot"></span>Ask me anything</div>
+      </div>
+    </div>
+    <button class="chat-close" id="chatClose">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg bot">
+      <div class="chat-bubble">Hi! 👋 I'm Abdullah's AI assistant. Ask me anything about his experience, skills, projects, or background!</div>
+    </div>
+    <div class="chat-suggestions" id="chatSuggestions">
+      <button class="chat-suggestion" onclick="sendSuggestion(this)">What tools does he use?</button>
+      <button class="chat-suggestion" onclick="sendSuggestion(this)">Tell me about his projects</button>
+      <button class="chat-suggestion" onclick="sendSuggestion(this)">What's his experience?</button>
+      <button class="chat-suggestion" onclick="sendSuggestion(this)">Is he open to work?</button>
+    </div>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chatInput" type="text" placeholder="Ask about Abdullah..." />
+    <button class="chat-send" id="chatSend">➤</button>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
