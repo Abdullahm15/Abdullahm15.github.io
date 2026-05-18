@@ -1,360 +1,471 @@
 'use strict';
 
-/* ════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    MATRIX RAIN
-════════════════════════════════════════ */
-(function () {
+═══════════════════════════════════════════════ */
+(function initMatrix() {
   const canvas = document.getElementById('matrix-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
+  const CHARS = '01アイウエカキクコサシスタチツ∑∆∏√∞≠';
+  const COL_W = 20;
   let W, H, cols, drops;
-  const chars = '01アイウエオカキクケコサシスセソ∑∆∏√∞≠≈';
 
   function resize() {
-    W = canvas.width = window.innerWidth;
+    W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    cols = Math.floor(W / 20);
-    drops = Array(cols).fill(1);
+    cols  = Math.floor(W / COL_W);
+    drops = new Array(cols).fill(0);
   }
 
   function draw() {
-    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    ctx.fillStyle = 'rgba(0,0,0,0.055)';
     ctx.fillRect(0, 0, W, H);
     ctx.fillStyle = '#3fb950';
-    ctx.font = '12px Space Mono, monospace';
+    ctx.font = `12px 'Space Mono', monospace`;
     drops.forEach((y, i) => {
-      const ch = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillText(ch, i * 20, y * 20);
-      if (y * 20 > H && Math.random() > 0.975) drops[i] = 0;
+      const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+      ctx.fillText(ch, i * COL_W, y * COL_W);
+      if (y * COL_W > H && Math.random() > 0.975) drops[i] = 0;
       drops[i]++;
     });
   }
 
   resize();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
   setInterval(draw, 65);
 })();
 
 
-/* ════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    TYPEWRITER
-════════════════════════════════════════ */
-(function () {
+═══════════════════════════════════════════════ */
+(function initTypewriter() {
   const el = document.getElementById('typewriter');
   if (!el) return;
-  const words = ['decisions.', 'strategies.', 'dashboards.', 'insights.', 'stories.'];
-  let wi = 0, ci = 0, deleting = false;
+  const WORDS = ['decisions.', 'strategies.', 'dashboards.', 'insights.', 'stories.'];
+  let wordIdx = 0, charIdx = 0, deleting = false;
 
-  function type() {
-    const word = words[wi];
+  function tick() {
+    const word = WORDS[wordIdx];
     if (!deleting) {
-      el.textContent = word.slice(0, ++ci);
-      if (ci === word.length) { deleting = true; setTimeout(type, 2000); return; }
+      el.textContent = word.slice(0, ++charIdx);
+      if (charIdx === word.length) {
+        deleting = true;
+        setTimeout(tick, 2000);
+        return;
+      }
     } else {
-      el.textContent = word.slice(0, --ci);
-      if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
+      el.textContent = word.slice(0, --charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        wordIdx = (wordIdx + 1) % WORDS.length;
+      }
     }
-    setTimeout(type, deleting ? 55 : 100);
+    setTimeout(tick, deleting ? 55 : 105);
   }
-  setTimeout(type, 1400);
+
+  setTimeout(tick, 1400);
 })();
 
 
-/* ════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   NAVBAR — scroll shrink + active link
+═══════════════════════════════════════════════ */
+(function initNavbar() {
+  const nav   = document.getElementById('navbar');
+  const links = document.querySelectorAll('.nav-links a[href^="#"]');
+
+  // Scroll shrink
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Active section highlight
+  const sections = [...document.querySelectorAll('section[id]')];
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    });
+  }, { threshold: 0.45 });
+  sections.forEach(s => io.observe(s));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+})();
+
+
+/* ═══════════════════════════════════════════════
+   MOBILE HAMBURGER MENU
+═══════════════════════════════════════════════ */
+(function initMobileNav() {
+  const btn      = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  const backdrop = document.getElementById('navBackdrop');
+  if (!btn) return;
+
+  function openMenu() {
+    btn.classList.add('open');
+    navLinks.classList.add('open');
+    backdrop.classList.add('visible');
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    btn.classList.remove('open');
+    navLinks.classList.remove('open');
+    backdrop.classList.remove('visible');
+    btn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', () =>
+    btn.classList.contains('open') ? closeMenu() : openMenu()
+  );
+  backdrop.addEventListener('click', closeMenu);
+
+  // Close on nav link click
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && btn.classList.contains('open')) closeMenu();
+  });
+})();
+
+
+/* ═══════════════════════════════════════════════
    SCROLL REVEAL
-════════════════════════════════════════ */
-const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+═══════════════════════════════════════════════ */
+(function initReveal() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
 
 
-/* ════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    SKILL BARS
-════════════════════════════════════════ */
-const barObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.skill-bar').forEach((bar, i) => {
-        setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, i * 130);
-      });
-      barObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.25 });
-const skillsSec = document.querySelector('#skills');
-if (skillsSec) barObs.observe(skillsSec);
+═══════════════════════════════════════════════ */
+(function initSkillBars() {
+  const section = document.getElementById('skills');
+  if (!section) return;
+
+  const io = new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) return;
+    section.querySelectorAll('.skill-bar-fill').forEach((bar, i) => {
+      setTimeout(() => {
+        bar.style.width = (bar.dataset.width || 0) + '%';
+      }, i * 120);
+    });
+    io.unobserve(section);
+  }, { threshold: 0.2 });
+
+  io.observe(section);
+})();
 
 
-/* ════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    COUNTER ANIMATION
-════════════════════════════════════════ */
-const counterObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    e.target.querySelectorAll('.skill-stat-num[data-target]').forEach(el => {
-      const target = +el.dataset.target;
+═══════════════════════════════════════════════ */
+(function initCounters() {
+  const els = document.querySelectorAll('.stat-num[data-target]');
+  if (!els.length) return;
+
+  const io = new IntersectionObserver(entries => {
+    if (!entries[0].isIntersecting) return;
+    els.forEach(el => {
+      const target = parseInt(el.dataset.target, 10);
       const suffix = el.dataset.suffix || '';
       let cur = 0;
-      const step = Math.ceil(target / 40);
+      const step = Math.max(1, Math.ceil(target / 45));
       const t = setInterval(() => {
         cur = Math.min(cur + step, target);
         el.textContent = cur + suffix;
         if (cur >= target) clearInterval(t);
-      }, 32);
+      }, 30);
     });
-    counterObs.unobserve(e.target);
-  });
-}, { threshold: 0.4 });
-const statSec = document.querySelector('.skills-highlight');
-if (statSec) counterObs.observe(statSec);
+    io.unobserve(entries[0].target);
+  }, { threshold: 0.5 });
+
+  io.observe(els[0].closest('.stat-grid') || els[0]);
+})();
 
 
-/* ════════════════════════════════════════
-   NAVBAR SCROLL
-════════════════════════════════════════ */
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    navbar.style.height = '52px';
-    navbar.style.borderBottomColor = 'rgba(88,166,255,0.1)';
-  } else {
-    navbar.style.height = '64px';
-    navbar.style.borderBottomColor = 'rgba(255,255,255,0.07)';
+/* ═══════════════════════════════════════════════
+   CV MODAL
+   — opens centered on screen, drops from nav area
+═══════════════════════════════════════════════ */
+(function initCVModal() {
+  const btn      = document.getElementById('cvBtn');
+  const overlay  = document.getElementById('cvOverlay');
+  const chevron  = document.getElementById('cvChevron');
+  const closeBtn = document.getElementById('cvClose');
+  if (!btn || !overlay) return;
+
+  function openCV() {
+    overlay.removeAttribute('hidden');
+    // Small rAF so the hidden removal is painted before transitions fire
+    requestAnimationFrame(() => {
+      btn.setAttribute('aria-expanded', 'true');
+      chevron.classList.add('rotated');
+      document.body.style.overflow = 'hidden';
+    });
   }
-});
 
-// Active nav highlight
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
-const secObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(l => l.style.color = '');
-      const a = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
-      if (a) a.style.color = '#58a6ff';
-    }
+  function closeCV() {
+    btn.setAttribute('aria-expanded', 'false');
+    chevron.classList.remove('rotated');
+    document.body.style.overflow = '';
+    // Wait for fade-out then hide
+    overlay.addEventListener('transitionend', () => {
+      if (!btn.matches('[aria-expanded="true"]')) overlay.setAttribute('hidden', '');
+    }, { once: true });
+    // Fallback
+    setTimeout(() => overlay.setAttribute('hidden', ''), 400);
+  }
+
+  btn.addEventListener('click', () => {
+    if (btn.getAttribute('aria-expanded') === 'true') closeCV();
+    else openCV();
   });
-}, { threshold: 0.45 });
-sections.forEach(s => secObs.observe(s));
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  closeBtn.addEventListener('click', closeCV);
+
+  // Click backdrop to close
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeCV();
   });
-});
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') closeCV();
+  });
+})();
 
 
-/* ════════════════════════════════════════
-   CV PANEL
-════════════════════════════════════════ */
-const cvBtn       = document.getElementById('cvBtn');
-const cvChevron   = document.getElementById('cvChevron');
-const cvOverlay   = document.getElementById('cvOverlay');
-const cvBackdrop  = document.getElementById('cvBackdrop');
-const cvPanelClose= document.getElementById('cvPanelClose');
-let cvOpen = false;
+/* ═══════════════════════════════════════════════
+   CHATBOT
+═══════════════════════════════════════════════ */
+(function initChatbot() {
+  /* ── DOM refs ── */
+  const fab       = document.getElementById('chatFab');
+  const win       = document.getElementById('chatWindow');
+  const closeBtn  = document.getElementById('chatClose');
+  const form      = document.getElementById('chatForm');
+  const input     = document.getElementById('chatInput');
+  const sendBtn   = document.getElementById('chatSend');
+  const msgArea   = document.getElementById('chatMessages');
+  const badge     = document.getElementById('chatBadge');
+  const quickBtns = document.getElementById('chatQuickBtns');
+  if (!fab || !win) return;
 
-function openCV() {
-  cvOpen = true;
-  cvOverlay.classList.add('open');
-  cvChevron.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeCV() {
-  cvOpen = false;
-  cvOverlay.classList.remove('open');
-  cvChevron.classList.remove('open');
-  document.body.style.overflow = '';
-}
+  /* ── State ── */
+  let isOpen   = false;
+  let isBusy   = false;
+  let history  = [];   // [{role, content}]
 
-cvBtn.addEventListener('click', () => cvOpen ? closeCV() : openCV());
-cvBackdrop.addEventListener('click', closeCV);
-cvPanelClose.addEventListener('click', closeCV);
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && cvOpen) closeCV(); });
+  /* ── CV context fed to Claude ── */
+  const SYSTEM = `You are a friendly, concise AI assistant embedded in Abdullah Mohamed's portfolio website.
+Only answer questions about Abdullah based on the CV below. Keep replies under 130 words unless the user asks for detail.
+Be professional, warm, and helpful.
 
+=== CV ===
+Name: Abdullah Muhammed Abdullah
+Location: Cairo, Egypt | Phone: +20 112 281 1623
+Email: abdallahmuhammedd7a@gmail.com
+LinkedIn: linkedin.com/in/abdullah-mohammedd | GitHub: github.com/Abdullahm15
 
-/* ════════════════════════════════════════
-   CHATBOT — WORKING API CALL
-════════════════════════════════════════ */
-const chatFab      = document.getElementById('chatFab');
-const chatWindow   = document.getElementById('chatWindow');
-const chatClose    = document.getElementById('chatClose');
-const chatInput    = document.getElementById('chatInput');
-const chatSend     = document.getElementById('chatSend');
-const chatMessages = document.getElementById('chatMessages');
-const fabBadge     = document.getElementById('fabBadge');
-let chatIsOpen = false;
-let conversationHistory = [];
+SUMMARY
+Data-oriented Information Systems graduate with hands-on experience in data analysis, KPI reporting, performance tracking, and BI reporting. Currently Planning and Performance Specialist at MNT-Halan. Seeking Data Analyst / BI Analyst / Performance Analyst roles.
 
-const CV_SYSTEM_PROMPT = `You are a friendly AI assistant embedded in Abdullah Mohamed's portfolio website. 
-Your ONLY job is to answer questions about Abdullah based on his CV below.
-Keep answers concise (under 120 words) unless asked for more detail.
-Be professional, warm, and helpful. Format responses clearly.
+EXPERIENCE
+Planning and Performance Specialist — MNT-Halan, Cairo | Aug 2024–Present
+• Collect, clean, analyze operational datasets to measure KPIs and identify trends
+• Design and maintain performance dashboards for department heads
+• Develop quarterly strategic plans and resource allocation models
+• Conduct benchmarking research against industry standards
+• Standardize data collection templates, reducing manual reporting effort
 
-=== ABDULLAH MOHAMED'S CV ===
+EDUCATION
+B.Sc. Information Systems — Misr University for Science and Technology (MUST)
+Graduated: June 2024 | GPA: 3.17/4.00 | Grade: B+
+Coursework: Database Systems, Business Analytics, MIS, Operations Research, Statistical Analysis
 
-NAME: Abdullah Muhammed Abdullah
-LOCATION: Cairo, Egypt
-PHONE: +20 112 281 1623
-EMAIL: abdallahmuhammedd71@gmail.com
-LINKEDIN: linkedin.com/in/abdullah-mohammedd
-GITHUB: github.com/Abdullahm15
+SKILLS
+• Excel: Power Query, PivotTables, VLOOKUP, XLOOKUP, Dynamic Arrays, Data Validation
+• Power BI: Data Modeling, DAX, Interactive Dashboards, Report Design
+• SQL: Querying, Filtering, Aggregation, Joins, Subqueries
+• Python: Pandas, NumPy (data cleaning & exploration)
+• Tableau, KPI Design, BI Reporting, Data Cleaning & Transformation
+• Soft skills: Analytical Thinking, Attention to Detail, Communication, Time Management
 
-SUMMARY:
-Data-oriented Information Systems graduate with hands-on experience in data analysis, KPI reporting, performance tracking, and business intelligence reporting. Currently working as a Planning and Performance Specialist at MNT-Halan. Seeking a data analyst, BI analyst, or performance analyst role.
-
-EXPERIENCE:
-- Planning and Performance Specialist at MNT-Halan, Cairo, Egypt — August 2024 to Present
-  * Collects, cleans, and analyzes operational datasets to measure KPIs
-  * Designs and maintains performance dashboards for department heads
-  * Develops quarterly strategic plans and resource allocation models
-  * Conducts benchmarking research against industry standards
-  * Supports cross-functional project coordination
-  * Standardizes data collection templates, reducing manual effort
-
-EDUCATION:
-- B.A. Business Information Systems, Misr University for Science and Technology (MUST)
-- Graduated: June 2024
-- GPA: 3.17 / 4.00 — Grade: B+
-- Coursework: Database Systems, Business Analytics, Management Information Systems, Operations Research, Statistical Analysis
-
-TECHNICAL SKILLS:
-- Excel: Power Query, PivotTables, VLOOKUP, XLOOKUP, Dynamic Arrays, Data Validation
-- Power BI: Data Modeling, DAX, Interactive Dashboards, Report Design
-- SQL: Querying, Filtering, Aggregation, Joins, Subqueries
-- Python: Pandas, NumPy (data cleaning & exploration)
-- Tableau, KPI Design, BI Reporting, Data Cleaning & Transformation
-
-SOFT SKILLS:
-- Analytical Thinking, Attention to Detail, Clear Communication, Time Management, Team Collaboration, Growth Mindset
-
-PROJECTS:
+PROJECTS
 1. Sales Performance Dashboard (Power BI + DAX + Excel)
-   - End-to-end BI dashboard with star-schema data model
-   - KPI cards, slicers, automated refresh
-   - Found 22% revenue concentration in one segment → exec reallocation brief
+   — Star-schema model, KPI cards, automated refresh
+   — Found 22% revenue concentration → exec reallocation brief
 
 2. KPI Reporting Automation (Excel + Power Query)
-   - Automated monthly KPI tracker with traffic-light indicators
-   - ~60% reduction in reporting prep time
+   — Automated monthly tracker with traffic-light indicators
+   — ~60% reduction in reporting prep time
 
-3. Customer Segmentation Analysis (SQL + Power BI)
-   - RFM segmentation on 500+ customers using percentile SQL logic
-   - Treemap & scatter chart in Power BI, mock marketing brief produced
+3. Customer Segmentation (SQL + Power BI)
+   — RFM scoring for 500+ customers via percentile SQL logic
+   — Treemap & scatter chart, mock marketing brief
 
-CERTIFICATIONS:
-- Google Data Analytics Professional Certificate (Coursera)
-- IBM Data Analyst Professional Certificate (Coursera)
-- Microsoft SQL Server (Coursera)
-- Deloitte Data Analytics Virtual Experience (Forage)
+CERTIFICATIONS
+• Google Data Analytics Professional Certificate (Coursera)
+• IBM Data Analyst Professional Certificate (Coursera)
+• Microsoft SQL Server (Coursera)
+• Deloitte Data Analytics Virtual Experience (Forage)
 
-LANGUAGES: Arabic (Native), English (Professional Working Proficiency)
-AVAILABILITY: Open to opportunities — actively seeking Data Analyst, BI Analyst, or Performance Analyst roles`;
+LANGUAGES: Arabic (Native), English (Professional)
+AVAILABILITY: Open to opportunities — actively looking`;
 
-function toggleChat() {
-  chatIsOpen = !chatIsOpen;
-  chatWindow.classList.toggle('open', chatIsOpen);
-  if (chatIsOpen) {
-    if (fabBadge) fabBadge.style.display = 'none';
-    setTimeout(() => chatInput.focus(), 300);
-  }
-}
-
-chatFab.addEventListener('click', toggleChat);
-chatClose.addEventListener('click', toggleChat);
-
-function appendMsg(text, role) {
-  const wrap = document.createElement('div');
-  wrap.className = `chat-msg ${role}`;
-  const bubble = document.createElement('div');
-  bubble.className = 'chat-bubble';
-  bubble.textContent = text;
-  wrap.appendChild(bubble);
-  chatMessages.appendChild(wrap);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function showTyping() {
-  const wrap = document.createElement('div');
-  wrap.className = 'chat-msg bot';
-  wrap.id = 'typingIndicator';
-  wrap.innerHTML = `<div class="chat-typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
-  chatMessages.appendChild(wrap);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function removeTyping() {
-  const t = document.getElementById('typingIndicator');
-  if (t) t.remove();
-}
-
-function hideSuggestions() {
-  const s = document.getElementById('chatSuggestions');
-  if (s) s.style.display = 'none';
-}
-
-async function sendMessage(text) {
-  text = text.trim();
-  if (!text) return;
-
-  hideSuggestions();
-  appendMsg(text, 'user');
-  chatInput.value = '';
-  chatSend.disabled = true;
-  showTyping();
-
-  conversationHistory.push({ role: 'user', content: text });
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'anthropic-dangerous-direct-browser-calls': 'true'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 400,
-        system: CV_SYSTEM_PROMPT,
-        messages: conversationHistory
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+  /* ── Toggle ── */
+  function toggleChat() {
+    isOpen = !isOpen;
+    if (isOpen) {
+      win.removeAttribute('hidden');
+      requestAnimationFrame(() => win.classList.add('open'));
+      fab.setAttribute('aria-expanded', 'true');
+      if (badge) badge.style.display = 'none';
+      input.focus();
+    } else {
+      win.classList.remove('open');
+      fab.setAttribute('aria-expanded', 'false');
+      setTimeout(() => win.setAttribute('hidden', ''), 300);
     }
-
-    const data = await response.json();
-    const reply = data?.content?.[0]?.text || "I couldn't retrieve a response. Please try again!";
-
-    conversationHistory.push({ role: 'assistant', content: reply });
-    removeTyping();
-    appendMsg(reply, 'bot');
-
-  } catch (err) {
-    console.error('Chat error:', err);
-    removeTyping();
-    appendMsg("Sorry, I ran into an issue. Please try again in a moment!", 'bot');
   }
 
-  chatSend.disabled = false;
-  chatInput.focus();
-}
+  fab.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && isOpen) toggleChat();
+  });
 
-chatSend.addEventListener('click', () => sendMessage(chatInput.value));
-chatInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) {
+  /* ── Render helpers ── */
+  function appendMsg(text, role) {
+    // Remove quick-buttons after first user message
+    if (role === 'user' && quickBtns) quickBtns.style.display = 'none';
+
+    const row    = document.createElement('div');
+    row.className = `chat-msg chat-msg-${role}`;
+    const bubble  = document.createElement('div');
+    bubble.className = 'chat-bubble';
+    bubble.textContent = text;
+    row.appendChild(bubble);
+    msgArea.appendChild(row);
+    msgArea.scrollTop = msgArea.scrollHeight;
+    return bubble;
+  }
+
+  function showTyping() {
+    const row  = document.createElement('div');
+    row.className = 'chat-msg chat-msg-bot';
+    row.id = 'typingRow';
+    row.innerHTML = `<div class="chat-typing">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>`;
+    msgArea.appendChild(row);
+    msgArea.scrollTop = msgArea.scrollHeight;
+  }
+
+  function removeTyping() {
+    const row = document.getElementById('typingRow');
+    if (row) row.remove();
+  }
+
+  function setBusy(state) {
+    isBusy = state;
+    sendBtn.disabled   = state;
+    input.disabled     = state;
+    sendBtn.style.opacity = state ? '0.45' : '1';
+  }
+
+  /* ── Send message ── */
+  async function sendMessage(text) {
+    text = text.trim();
+    if (!text || isBusy) return;
+
+    input.value = '';
+    appendMsg(text, 'user');
+    setBusy(true);
+    showTyping();
+
+    history.push({ role: 'user', content: text });
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'anthropic-dangerous-direct-browser-calls': 'true'
+        },
+        body: JSON.stringify({
+          model:      'claude-sonnet-4-20250514',
+          max_tokens: 512,
+          system:     SYSTEM,
+          messages:   history
+        })
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error?.message || `HTTP ${res.status}`);
+      }
+
+      const data  = await res.json();
+      const reply = data?.content?.[0]?.text;
+
+      if (!reply) throw new Error('Empty response from API');
+
+      history.push({ role: 'assistant', content: reply });
+      removeTyping();
+      appendMsg(reply, 'bot');
+
+    } catch (err) {
+      console.error('[Chatbot error]', err);
+      removeTyping();
+      appendMsg(`Sorry, I couldn't connect right now. Please try again in a moment! 🙏`, 'bot');
+      // Remove failed user message from history so next retry is clean
+      history.pop();
+    } finally {
+      setBusy(false);
+      input.focus();
+    }
+  }
+
+  /* ── Events ── */
+  form.addEventListener('submit', e => {
     e.preventDefault();
-    sendMessage(chatInput.value);
-  }
-});
+    sendMessage(input.value);
+  });
 
-window.sendSuggestion = function (btn) {
-  sendMessage(btn.textContent);
-};
+  // Quick buttons
+  if (quickBtns) {
+    quickBtns.querySelectorAll('.chat-quick-btn').forEach(btn => {
+      btn.addEventListener('click', () => sendMessage(btn.dataset.msg));
+    });
+  }
+
+  // Expose global (legacy inline handlers fallback)
+  window.sendSuggestion = text => sendMessage(text);
+})();
